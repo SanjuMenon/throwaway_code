@@ -74,12 +74,34 @@ Once the service is running, you can access:
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
 
+## Testing with Mock Data Collection Service
+
+A mock data collection service is included for testing purposes:
+
+```bash
+# Run the mock service on port 8001
+python mock_data_collection_service.py
+```
+
+The mock service provides sample data sets:
+- **default**: User data with statistics
+- **sales**: Sales data with revenue information
+- **events**: Event data with scheduling information
+
+You can test the summarization service by:
+1. Setting `DATA_COLLECTION_SERVICE_URL=http://localhost:8001` in your `.env`
+2. Running the mock service: `python mock_data_collection_service.py`
+3. Running the main service: `uvicorn main:app --reload --port 8000`
+4. Making a POST request to `/summarize` with optional `data_source` parameter
+
 ## Data Collection Service Integration
 
 The service expects the data collection service to have:
 - **Endpoint**: `GET /data`
 - **Optional Query Parameter**: `source` (for specifying data source)
 - **Response**: JSON data (dict, list, or any JSON-serializable structure)
+
+A sample JSON file (`sample_data.json`) is also included to show the expected data format.
 
 ## Error Handling
 
